@@ -892,17 +892,23 @@ static void scanKmods() {
 static mach_vm_address_t orgPciRead8, orgPciRead16, orgPciRead32;
 static bool gDevidLogged, gRevisionLogged;
 
-// 24H32's TTL checks both device ID and PCI revision before software init. This RedmiBook
-// reports revision 02, absent from Navi 23's table; its c7 row has the same capability payload
-// as the other Navi 23 rows. Keep the existing identity consistent across config-read widths.
+// 24H32's TTL checks both device ID and PCI revision before software init. Rembrandt APUs
+// report their own PCI revision (02 on the RedmiBook test machine, c8 on Rembrandt-B parts)
+// and no such row exists in Navi 23's DeviceCapabilityTbl; its c7 row has the same capability
+// payload as the other Navi 23 rows. Normalise every 1002:1681 revision to c7 so any APU
+// stepping is accepted, while leaving other devices untouched. Keep the identity consistent
+// across config-read widths.
 static uint32_t rembrandtPciRevision(void *dev, uint64_t off, uint32_t value) {
-	if (off != kIOPCIConfigRevisionID || (value & 0xFF) != 0x02)
+	if (off != kIOPCIConfigRevisionID)
+		return value;
+	uint32_t revision = value & 0xFF;
+	if (revision == 0xC7)
 		return value;
 	auto read16 = reinterpret_cast<uint16_t (*)(void *, uint64_t)>(orgPciRead16);
 	if (read16(dev, kIOPCIConfigVendorID) != 0x1002 || read16(dev, kIOPCIConfigDeviceID) != 0x1681)
 		return value;
 	if (!gRevisionLogged)
-		gRevisionLogged = true, LOG("pcidevid: PCI revision 02 -> c7");
+		gRevisionLogged = true, LOG("pcidevid: PCI revision %02x -> c7", revision);
 	return (value & ~0xFFU) | 0xC7;
 }
 

@@ -19,7 +19,7 @@
       "src/RembrandtGfx/fw.s": "50f5522bbce7ee6898dd234d2d91a6fe67cb1ad08630e561b8cd1e94c3552366",
       "src/RembrandtGfx/golden.cpp": "f2e4a206754ddb189a7769d8d4966a6155e1f553ad79c3fe5d0cb1ed29681029",
       "src/RembrandtGfx/info.c": "e7bd541186cd556a45584e29449006fb95a986af3a00a28d28d0d124336215f7",
-      "src/RembrandtGfx/kern_start.cpp": "3cfcbc9cb360d554d4b279f9ab837814b42977ef42067f306f81a7f4c3dcfa15",
+      "src/RembrandtGfx/kern_start.cpp": "97a622d362d07ac4f44db747582d85707e73a58b71ce40ad24a793db5821a615",
       "src/RembrandtGfx/mmio.cpp": "589984df2af543766ad461c468e93c33780d618c8078e5ee5f8931a886bc7c96",
       "src/RembrandtGfx/nvcopy.cpp": "5057a354c5c91915ebfd68ec44855b18fee130eaf344ec2b37886eb028868ce8",
       "src/RembrandtGfx/phyvalid.hpp": "13218e83047a01a0b37115fcb5a0b796cc08a3073a0280bff0f8bb178caad371",
